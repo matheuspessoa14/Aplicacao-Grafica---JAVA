@@ -1,19 +1,110 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# SQL Server Management Studio Solution File, Format Version 20.00
-VisualStudioVersion = 15.0.28307.421
-MinimumVisualStudioVersion = 10.0.40219.1
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Default|Default = Default|Default
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4896A3FD-D9F1-48DD-98F7-68C371223BE5}.Default|Default.ActiveCfg = Default
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7EBD665D-7A40-42B8-9A91-A6ABF667C8BF}
-	EndGlobalSection
-EndGlobal
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Tempo de geração: 10/07/2025 às 23:02
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Banco de dados: `gestao_eventos`
+--
+CREATE DATABASE IF NOT EXISTS `gestao_eventos` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `gestao_eventos`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `evento`
+--
+
+DROP TABLE IF EXISTS `evento`;
+CREATE TABLE IF NOT EXISTS `evento` (
+  `id_evento` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  `local` varchar(150) DEFAULT NULL,
+  `id_organizador` int(11) DEFAULT NULL,
+  `data_evento` date DEFAULT NULL,
+  `descricao` text DEFAULT NULL,
+  PRIMARY KEY (`id_evento`),
+  KEY `id_organizador` (`id_organizador`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `evento`
+--
+
+INSERT INTO `evento` (`id_evento`, `nome`, `local`, `id_organizador`, `data_evento`, `descricao`) VALUES
+(1, 'Choppada', 'RJ', 1, '2025-07-10', 'Universitário');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `organizador`
+--
+
+DROP TABLE IF EXISTS `organizador`;
+CREATE TABLE IF NOT EXISTS `organizador` (
+  `id_organizador` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `telefone` varchar(20) DEFAULT NULL,
+  `empresa` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_organizador`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `organizador`
+--
+
+INSERT INTO `organizador` (`id_organizador`, `nome`, `email`, `telefone`, `empresa`) VALUES
+(1, 'LUCCAS', 'LUCCAS@GMAIL.COM', '21965547197', 'LucasCompany');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `participante`
+--
+
+DROP TABLE IF EXISTS `participante`;
+CREATE TABLE IF NOT EXISTS `participante` (
+  `id_participante` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `telefone` varchar(20) DEFAULT NULL,
+  `tipo_ingresso` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_participante`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `participante`
+--
+
+INSERT INTO `participante` (`id_participante`, `nome`, `email`, `telefone`, `tipo_ingresso`) VALUES
+(1, 'MATHEUS', 'MATHEUS@GMAIL.COM', '21975715380', 'MEIA');
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `evento`
+--
+ALTER TABLE `evento`
+  ADD CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`id_organizador`) REFERENCES `organizador` (`id_organizador`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
