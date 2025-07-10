@@ -22,7 +22,7 @@ A interface gráfica foi construída com **Java Swing**, seguindo boas práticas
 ---
 ## ⚙️ Funcionalidades
 
-✅ Consultar evento por ID
-✅ Atualizar ou cadastrar novo evento
-✅ Interface intuitiva com validações básicas
-✅ Relacionamento entre Evento e Organizador com chave estrangeira
+- ✅ Consultar evento por ID
+- ✅ Atualizar ou cadastrar novo evento
+- ✅ Interface intuitiva com validações básicas
+- ✅ Relacionamento entre Evento e Organizador com chave estrangeira
