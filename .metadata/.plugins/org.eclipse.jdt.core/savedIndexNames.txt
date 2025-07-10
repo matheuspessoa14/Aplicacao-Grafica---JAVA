@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+C:\Users\biblioteca.sl\Downloads\Programação - AVA2\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
+1466198104.index
+2792298.index

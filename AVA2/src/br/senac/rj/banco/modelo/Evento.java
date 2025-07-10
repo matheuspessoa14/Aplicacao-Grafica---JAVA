@@ -1,0 +1,70 @@
+package br.senac.rj.banco.modelo;
+
+public class Evento {
+    private int id;
+    private String nome;
+    private String data; // formato "yyyy-MM-dd"
+    private String local;
+    private String descricao;
+    private int idOrganizador;  // novo campo
+
+    public Evento() {}
+
+    public Evento(int id, String nome, String data, String local, String descricao, int idOrganizador) {
+        this.id = id;
+        this.nome = nome;
+        this.data = data;
+        this.local = local;
+        this.descricao = descricao;
+        this.idOrganizador = idOrganizador;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getLocal() {
+        return local;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public int getIdOrganizador() {
+        return idOrganizador;
+    }
+
+    public void setIdOrganizador(int idOrganizador) {
+        this.idOrganizador = idOrganizador;
+    }
+}
+
