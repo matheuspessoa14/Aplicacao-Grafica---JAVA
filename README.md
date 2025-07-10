@@ -27,13 +27,3 @@ A interface gráfica foi construída com **Java Swing**, seguindo boas práticas
 - ✅ Relacionamento entre Evento e Organizador com chave estrangeira
 
 ---
-
-## 👤 Autor
-
-Matheus Pessoa Telles de Oliveira  
-💻 Estudante de Análise e Desenvolvimento de Sistemas  
-🚀 Apaixonado por desenvolvimento de sistemas e interfaces gráficas em Java
-
----
-
-
