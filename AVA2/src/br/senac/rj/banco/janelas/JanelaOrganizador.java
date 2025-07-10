@@ -1,0 +1,172 @@
+package br.senac.rj.banco.janelas;
+
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+import br.senac.rj.banco.modelo.OrganizadorDAO;
+
+public class JanelaOrganizador {
+
+    public static JFrame criarJanelaOrganizador() {
+        JFrame janela = new JFrame("Atualização de Organizador");
+        janela.setResizable(false);
+        janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        janela.setSize(500, 350);
+
+        Container caixa = janela.getContentPane();
+        caixa.setLayout(null);
+
+        JLabel labelId = new JLabel("ID do Organizador:");
+        JLabel labelNome = new JLabel("Nome:");
+        JLabel labelEmail = new JLabel("Email:");
+        JLabel labelTelefone = new JLabel("Telefone:");
+        JLabel labelEmpresa = new JLabel("Empresa:");
+
+        labelId.setBounds(30, 30, 140, 20);
+        labelNome.setBounds(30, 70, 140, 20);
+        labelEmail.setBounds(30, 110, 140, 20);
+        labelTelefone.setBounds(30, 150, 140, 20);
+        labelEmpresa.setBounds(30, 190, 140, 20);
+
+        JTextField jTextId = new JTextField();
+        JTextField jTextNome = new JTextField();
+        JTextField jTextEmail = new JTextField();
+        JTextField jTextTelefone = new JTextField();
+        JTextField jTextEmpresa = new JTextField();
+
+        jTextId.setBounds(180, 30, 100, 20);
+        jTextNome.setBounds(180, 70, 250, 20);
+        jTextEmail.setBounds(180, 110, 250, 20);
+        jTextTelefone.setBounds(180, 150, 250, 20);
+        jTextEmpresa.setBounds(180, 190, 250, 20);
+
+        // No início, habilita todos os campos para cadastro direto
+        jTextNome.setEnabled(true);
+        jTextEmail.setEnabled(true);
+        jTextTelefone.setEnabled(true);
+        jTextEmpresa.setEnabled(true);
+
+        JButton botaoConsultar = new JButton("Consultar");
+        JButton botaoGravar = new JButton("Gravar");
+        JButton botaoLimpar = new JButton("Limpar");
+
+        botaoConsultar.setBounds(300, 30, 120, 20);
+        botaoGravar.setBounds(100, 250, 100, 25);
+        botaoLimpar.setBounds(260, 250, 100, 25);
+
+        botaoGravar.setEnabled(true); // já habilitado para gravar direto
+
+        janela.add(labelId);
+        janela.add(labelNome);
+        janela.add(labelEmail);
+        janela.add(labelTelefone);
+        janela.add(labelEmpresa);
+
+        janela.add(jTextId);
+        janela.add(jTextNome);
+        janela.add(jTextEmail);
+        janela.add(jTextTelefone);
+        janela.add(jTextEmpresa);
+
+        janela.add(botaoConsultar);
+        janela.add(botaoGravar);
+        janela.add(botaoLimpar);
+
+        OrganizadorDAO organizador = new OrganizadorDAO();
+
+        botaoConsultar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int id = Integer.parseInt(jTextId.getText());
+
+                    if (!organizador.consultarOrganizador(id)) {
+                        JOptionPane.showMessageDialog(janela, "Organizador não encontrado!");
+                        jTextNome.setText("");
+                        jTextEmail.setText("");
+                        jTextTelefone.setText("");
+                        jTextEmpresa.setText("");
+                    } else {
+                        jTextNome.setText(organizador.getNome());
+                        jTextEmail.setText(organizador.getEmail());
+                        jTextTelefone.setText(organizador.getTelefone());
+                        jTextEmpresa.setText(organizador.getEmpresa());
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(janela, "Preencha o campo ID corretamente!");
+                }
+            }
+        });
+
+        botaoGravar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int resposta = JOptionPane.showConfirmDialog(janela, "Deseja salvar o organizador?", "Confirmação",
+                        JOptionPane.YES_NO_OPTION);
+                if (resposta == JOptionPane.YES_OPTION) {
+                    try {
+                        String idText = jTextId.getText().trim();
+                        String nome = jTextNome.getText().trim();
+                        String email = jTextEmail.getText().trim();
+                        String telefone = jTextTelefone.getText().trim();
+                        String empresa = jTextEmpresa.getText().trim();
+
+                        if (nome.isEmpty()) {
+                            JOptionPane.showMessageDialog(janela, "Preencha o campo Nome.");
+                            jTextNome.requestFocus();
+                            return;
+                        }
+
+                        boolean sucesso;
+
+                        if (idText.isEmpty()) {
+                            // Sem ID: cadastrar novo
+                            sucesso = organizador.cadastrarOrganizador(nome, email, telefone, empresa);
+                            if (sucesso) {
+                                JOptionPane.showMessageDialog(janela, "Organizador cadastrado com sucesso!");
+                            } else {
+                                JOptionPane.showMessageDialog(janela, "Erro ao cadastrar organizador.");
+                            }
+                        } else {
+                            // Com ID: tentar atualizar
+                            int id = Integer.parseInt(idText);
+                            boolean existe = organizador.consultarOrganizador(id);
+                            if (!existe) {
+                                // Se não existe, cadastrar novo mesmo com ID preenchido (opcional)
+                                sucesso = organizador.cadastrarOrganizador(nome, email, telefone, empresa);
+                                if (sucesso) {
+                                    JOptionPane.showMessageDialog(janela, "Organizador cadastrado com sucesso!");
+                                } else {
+                                    JOptionPane.showMessageDialog(janela, "Erro ao cadastrar organizador.");
+                                }
+                            } else {
+                                // Atualizar existente
+                                sucesso = organizador.atualizarOrganizador(id, nome, email, telefone, empresa);
+                                if (sucesso) {
+                                    JOptionPane.showMessageDialog(janela, "Organizador atualizado com sucesso!");
+                                } else {
+                                    JOptionPane.showMessageDialog(janela, "Erro ao atualizar organizador.");
+                                }
+                            }
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(janela, "ID inválido!");
+                    }
+                }
+            }
+        });
+
+        botaoLimpar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                jTextId.setText("");
+                jTextNome.setText("");
+                jTextEmail.setText("");
+                jTextTelefone.setText("");
+                jTextEmpresa.setText("");
+            }
+        });
+
+        return janela;
+    }
+}

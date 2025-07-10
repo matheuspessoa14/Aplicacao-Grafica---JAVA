@@ -1,0 +1,83 @@
+package br.senac.rj.banco.modelo;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class OrganizadorDAO extends Organizador {
+
+    public boolean consultarOrganizador(int id) {
+        Connection conexao = null;
+        try {
+            conexao = Conexao.conectaBanco();
+            String sql = "SELECT * FROM organizador WHERE id_organizador=?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (!rs.isBeforeFirst()) {
+                System.out.println("Organizador não encontrado!");
+                return false;
+            } else {
+                while (rs.next()) {
+                    this.setId(rs.getInt("id_organizador"));
+                    this.setNome(rs.getString("nome"));
+                    this.setEmail(rs.getString("email"));
+                    this.setTelefone(rs.getString("telefone"));
+                    this.setEmpresa(rs.getString("empresa"));
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao consultar organizador: " + e.getMessage());
+            return false;
+        } finally {
+            Conexao.fechaConexao(conexao);
+        }
+    }
+
+    public boolean cadastrarOrganizador(String nome, String email, String telefone, String empresa) {
+        Connection conexao = null;
+        try {
+            conexao = Conexao.conectaBanco();
+            String sql = "INSERT INTO organizador (nome, email, telefone, empresa) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setString(1, nome);
+            ps.setString(2, email);
+            ps.setString(3, telefone);
+            ps.setString(4, empresa);
+            int linhas = ps.executeUpdate();
+            return linhas > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao cadastrar organizador: " + e.getMessage());
+            return false;
+        } finally {
+            Conexao.fechaConexao(conexao);
+        }
+    }
+
+    public boolean atualizarOrganizador(int id, String nome, String email, String telefone, String empresa) {
+        if (!consultarOrganizador(id))
+            return false;
+
+        Connection conexao = null;
+        try {
+            conexao = Conexao.conectaBanco();
+            String sql = "UPDATE organizador SET nome=?, email=?, telefone=?, empresa=? WHERE id_organizador=?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setString(1, nome);
+            ps.setString(2, email);
+            ps.setString(3, telefone);
+            ps.setString(4, empresa);
+            ps.setInt(5, id);
+            int linhas = ps.executeUpdate();
+            return linhas > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar organizador: " + e.getMessage());
+            return false;
+        } finally {
+            Conexao.fechaConexao(conexao);
+        }
+    }
+}
