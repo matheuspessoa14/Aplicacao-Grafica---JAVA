@@ -18,12 +18,11 @@ A interface gráfica foi construída com **Java Swing**, seguindo boas práticas
 - **JDBC (Java Database Connectivity)**
 - **MySQL**
 - **XAMPP** (como ambiente local de testes)
-
+  
+---
 ## ⚙️ Funcionalidades
 
 - ✅ Consultar evento por ID
 - ✅ Atualizar ou cadastrar novo evento
 - ✅ Interface intuitiva com validações básicas
 - ✅ Relacionamento entre Evento e Organizador com chave estrangeira
-
----
