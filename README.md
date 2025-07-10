@@ -28,27 +28,6 @@ A interface gráfica foi construída com **Java Swing**, seguindo boas práticas
 
 ---
 
-## 🗃️ Banco de Dados
-
-- Nome do banco: `gestao_eventos`
-- Tabelas principais:
-  - `evento`
-  - `organizador`
-  - `participante`
-
-**Importante:** Certifique-se de cadastrar previamente os organizadores antes de vincular um evento ao `id_organizador`, pois a tabela de eventos possui uma **chave estrangeira** que depende disso.
-
----
-
-## 🚀 Como executar o projeto
-
-1. Clone este repositório.
-2. Importe o projeto em uma IDE como Eclipse ou IntelliJ.
-3. Certifique-se de que o MySQL está rodando com o banco `gestao_eventos` criado.
-4. Execute a classe `TesteSwing.java` para abrir o menu inicial.
-
----
-
 ## 👤 Autor
 
 Matheus Pessoa Telles de Oliveira  
